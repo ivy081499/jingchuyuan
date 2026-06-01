@@ -82,6 +82,49 @@ dist
 
 如果後台有 `Deploy command` 欄位，請保持空白；不要填 `wrangler` 相關命令。
 
+## `cloudflare/workers-autoconfig` 分支
+
+Cloudflare 可能會自動建立遠端分支：
+
+```text
+origin/cloudflare/workers-autoconfig
+```
+
+目前已確認該分支包含 Worker 部署用的異動：
+
+- `astro.config.mjs` 加入 `@astrojs/cloudflare` adapter
+- `package.json` 加入 `@astrojs/cloudflare`、`wrangler`、`deploy`、`generate-types`
+- `package-lock.json` 加入大量 Worker/Cloudflare adapter 依賴
+- 新增 `wrangler.jsonc`
+- 新增 `public/.assetsignore`
+- `tsconfig.json` 加入 `worker-configuration.d.ts`
+- `.gitignore` 加入 wrangler 相關忽略規則
+
+這些異動不適合目前的純靜態 Astro Pages 網站。不要 merge 這個分支到 `main`。
+
+目前正確的 `main` 應該保持：
+
+```js
+// astro.config.mjs
+export default defineConfig({});
+```
+
+```json
+// package.json
+"dependencies": {
+  "astro": "^6.4.2"
+}
+```
+
+並且不需要：
+
+```text
+wrangler.jsonc
+@astrojs/cloudflare
+wrangler
+public/.assetsignore
+```
+
 ## 之後如果真的要表單後端
 
 未來要做表單送出、LINE 通知時，再另外新增：

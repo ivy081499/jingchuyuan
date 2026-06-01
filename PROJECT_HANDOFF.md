@@ -157,6 +157,18 @@ Important: `origin/cloudflare/workers-autoconfig` was created by Cloudflare duri
 
 Do not delete the remote branch without explicit user approval. Recommended handling is to ignore it for now and deploy from `main` using Cloudflare Pages static settings.
 
+Inspected contents of `origin/cloudflare/workers-autoconfig`:
+
+- `astro.config.mjs`: imports `@astrojs/cloudflare` and sets `adapter: cloudflare()`.
+- `package.json`: adds `@astrojs/cloudflare`, `wrangler`, `deploy`, `generate-types`, `preview: npm run build && wrangler dev`, and a Vite override.
+- `package-lock.json`: adds the large dependency tree for those packages.
+- `wrangler.jsonc`: configures a Worker with `main: "@astrojs/cloudflare/entrypoints/server"` and assets binding.
+- `public/.assetsignore`: ignores `_worker.js` and `_routes.json`.
+- `tsconfig.json`: includes `worker-configuration.d.ts`.
+- `.gitignore`: adds wrangler-related ignore entries.
+
+Decision: none of these Worker/autoconfig changes should be brought into `main` for the current static Pages deployment. The only arguably harmless change is wrangler ignores in `.gitignore`, but it is unnecessary until a Worker backend is intentionally added. Keep `main` as a pure static Astro site.
+
 ## Next Recommended Steps
 
 1. Commit current documentation/skill updates if desired.

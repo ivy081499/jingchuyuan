@@ -34,6 +34,7 @@ When the user asks for this project handoff:
    - next recommended steps
    - risks/blockers
    - local and remote branch state, especially extra deployment-created branches
+   - file-level diff summary for any deployment-created branch, not just branch names
    - commands already verified
 4. Preserve useful previous context; do not erase open tasks unless completed.
 5. Decide whether a branch is needed:
