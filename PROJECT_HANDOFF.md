@@ -171,13 +171,13 @@ Decision: none of these Worker/autoconfig changes should be brought into `main` 
 
 ## Next Recommended Steps
 
-1. Commit current documentation/skill updates if desired.
-2. Push `main` if the handoff commit should be available on GitHub.
+1. For all future work, start from `main`, create a descriptive branch, commit there, verify, then merge back into `main`.
+2. Push `main` when changes should trigger Cloudflare Pages production deployment.
 3. Do not use or merge `origin/cloudflare/workers-autoconfig`.
 4. Add the prepared images to `public/images/...` using the exact filenames in `IMAGE_PLAN.md`.
 5. Run `npm run build`.
-6. Commit image/content changes.
-7. Push to GitHub.
+6. Commit image/content changes on a branch, then merge into `main`.
+7. Push `main` to GitHub.
 8. Deploy through Cloudflare Pages, not Workers.
 9. After client review, update official copy and links.
 10. Decide whether first release needs real form submission or only LINE/IG contact buttons.
@@ -193,3 +193,5 @@ Project-local handoff skill is stored at:
 Only use this handoff file for the `jingchuyuan` / `靜初苑` website project. Other projects may have their own handoff skills and files.
 
 When the user says "交接", "交接工作", "更新交接", "寫交接", or similar while working inside this repo or while explicitly referring to this project, update this file with the latest work state and unfinished tasks.
+
+Branch workflow rule: future updates should be done on a branch created from `main`, then merged back into `main` after verification. Cloudflare Pages production should use `main`.

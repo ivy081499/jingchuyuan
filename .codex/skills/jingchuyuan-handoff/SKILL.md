@@ -21,6 +21,36 @@ Use this skill only if one of these is true:
 
 Do not use this skill for generic handoff requests in other repositories. Other projects may have their own handoff skills.
 
+## Required Branch Workflow
+
+Cloudflare Pages production should build from `main`. All project work, including handoff updates, must follow this branch flow unless the user explicitly says otherwise:
+
+1. Start from `main`.
+2. Check `git status --short --branch`, `git branch -a`, and `git branch -vv`.
+3. If `main` has unpushed commits, keep them; do not reset or discard them.
+4. Create a short descriptive branch from the current `main`, for example:
+   - `chore/update-handoff`
+   - `docs/cloudflare-notes`
+   - `feat/contact-form`
+5. Make edits on that branch.
+6. Verify appropriate checks. For website/source changes, run:
+
+```bash
+PATH=/Users/admin/.local/node-versions/node-v22.16.0-darwin-arm64/bin:$PATH npm run build
+```
+
+7. Commit on the work branch.
+8. Switch back to `main`.
+9. Merge the work branch into `main` using a non-interactive merge.
+10. Confirm `git status --short --branch`.
+11. Report:
+    - branch created
+    - commit hash
+    - merge result
+    - whether `main` is ahead of `origin/main`
+
+Do not push unless the user asks for push or deployment.
+
 When the user asks for this project handoff:
 
 1. Work in the repo root.
@@ -37,13 +67,10 @@ When the user asks for this project handoff:
    - file-level diff summary for any deployment-created branch, not just branch names
    - commands already verified
 4. Preserve useful previous context; do not erase open tasks unless completed.
-5. Decide whether a branch is needed:
-   - For documentation-only handoff updates on a clean or already-active working branch, update and commit directly.
-   - For risky code changes, unrelated dirty worktree changes, or experimental handoff-related fixes, create a descriptive branch before editing.
-   - Do not create a new branch for handoff documentation unless there is a clear isolation reason.
-   - Never overwrite unrelated user changes.
-6. Commit handoff updates by default unless the user explicitly asks not to commit.
-7. Report the commit hash and any remaining uncommitted files.
+5. Follow the Required Branch Workflow above.
+6. Never overwrite unrelated user changes.
+7. Commit handoff updates by default unless the user explicitly asks not to commit.
+8. Report the commit hash, merge result, and any remaining uncommitted files.
 
 ## Current Product Context
 
