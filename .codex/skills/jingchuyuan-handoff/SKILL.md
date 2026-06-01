@@ -48,8 +48,9 @@ PATH=/Users/admin/.local/node-versions/node-v22.16.0-darwin-arm64/bin:$PATH npm 
     - commit hash
     - merge result
     - whether `main` is ahead of `origin/main`
+    - reminder that push is left for the user
 
-Do not push unless the user asks for push or deployment.
+Never push. The user explicitly handles all `git push` operations for this project. Do not run `git push`, even after merging to `main`, unless the user gives a new explicit push instruction in the same turn.
 
 When the user asks for this project handoff:
 
@@ -70,7 +71,7 @@ When the user asks for this project handoff:
 5. Follow the Required Branch Workflow above.
 6. Never overwrite unrelated user changes.
 7. Commit handoff updates by default unless the user explicitly asks not to commit.
-8. Report the commit hash, merge result, and any remaining uncommitted files.
+8. Report the commit hash, merge result, any remaining uncommitted files, and that push is left for the user.
 
 ## Current Product Context
 
