@@ -171,16 +171,19 @@ Decision: none of these Worker/autoconfig changes should be brought into `main` 
 
 ## Next Recommended Steps
 
-1. For all future work, start from `main`, create a descriptive branch, commit there, verify, then merge back into `main`.
-2. Do not push. The user handles all `git push` operations.
-3. Do not use or merge `origin/cloudflare/workers-autoconfig`.
-4. Add the prepared images to `public/images/...` using the exact filenames in `IMAGE_PLAN.md`.
-5. Run `npm run build`.
-6. Commit image/content changes on a branch, then merge into `main`.
-7. Tell the user when `main` is ahead and let the user push to GitHub.
-8. Deploy through Cloudflare Pages, not Workers.
-9. After client review, update official copy and links.
-10. Decide whether first release needs real form submission or only LINE/IG contact buttons.
+1. Before any future file edit, run the mandatory branch gate: `git status --short --branch`, `git branch -a`, and `git branch -vv`.
+2. If the current branch is not a short descriptive branch created from `main`, stop before editing, switch to `main`, create the branch, then continue.
+3. If edits were accidentally made on the wrong branch, stash only the relevant edits, move to a correct branch from `main`, then reapply them. Do not continue editing on the wrong branch.
+4. Report the branch being used before the first edit.
+5. Do not push. The user handles all `git push` operations.
+6. Do not use or merge `origin/cloudflare/workers-autoconfig`.
+7. Add the prepared images to `public/images/...` using the exact filenames in `IMAGE_PLAN.md`.
+8. Run `npm run build`.
+9. Commit image/content changes on a branch, then merge into `main` if the user wants the work finalized.
+10. Tell the user when `main` is ahead and let the user push to GitHub.
+11. Deploy through Cloudflare Pages, not Workers.
+12. After client review, update official copy and links.
+13. Decide whether first release needs real form submission or only LINE/IG contact buttons.
 
 ## Handoff Skill
 
@@ -194,6 +197,22 @@ Only use this handoff file for the `jingchuyuan` / `靜初苑` website project. 
 
 When the user says "交接", "交接工作", "更新交接", "寫交接", or similar while working inside this repo or while explicitly referring to this project, update this file with the latest work state and unfinished tasks.
 
-Branch workflow rule: future updates should be done on a branch created from `main`, then merged back into `main` after verification. Cloudflare Pages production should use `main`.
+Branch workflow rule: future updates must pass the branch gate before any edit. Check branch/status first, start from `main`, create a descriptive work branch, make edits there, verify, and only merge back into `main` when the user wants the work finalized. Cloudflare Pages production should use `main`.
 
 Push rule: never run `git push` for this project unless the user gives a new explicit push instruction in the same turn. The user wants to handle pushing manually.
+
+## Workflow Incident: 2026-06-01
+
+During the nav active-state task, Codex initially edited `src/layouts/BaseLayout.astro` on `chore/contact-alerts-and-workflow-rules` instead of first creating a branch from `main`.
+
+Correction already performed:
+
+- Stashed the relevant layout edit.
+- Switched back to `main`.
+- Created `feature/nav-active-state` from `main`.
+- Reapplied the stashed edit onto `feature/nav-active-state`.
+- Re-ran `npm run build` successfully.
+
+Root cause: the branch workflow existed in documentation, but was treated as a remembered guideline instead of a mandatory pre-edit gate.
+
+Permanent correction: before any future file edit in this repo, run and satisfy the branch gate. If the gate has not been performed in the current turn, do not edit files.

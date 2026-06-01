@@ -25,25 +25,34 @@ Do not use this skill for generic handoff requests in other repositories. Other 
 
 Cloudflare Pages production should build from `main`. All project work, including handoff updates, must follow this branch flow unless the user explicitly says otherwise:
 
+Before reading implementation files deeply, running edits, applying patches, formatting, or generating assets, perform this mandatory branch gate:
+
+1. Run `git status --short --branch`, `git branch -a`, and `git branch -vv`.
+2. If the current branch is not a short descriptive work branch created from `main`, do not edit files yet.
+3. If there are already local edits on the wrong branch, stash only the relevant local edits, switch to `main`, create the correct work branch, then reapply the stash.
+4. If unrelated user changes are present, preserve them and do not stash or move them unless required for the current task.
+5. Report the branch being used before making the first edit.
+
+After the branch gate passes:
+
 1. Start from `main`.
-2. Check `git status --short --branch`, `git branch -a`, and `git branch -vv`.
-3. If `main` has unpushed commits, keep them; do not reset or discard them.
-4. Create a short descriptive branch from the current `main`, for example:
+2. If `main` has unpushed commits, keep them; do not reset or discard them.
+3. Create a short descriptive branch from the current `main`, for example:
    - `chore/update-handoff`
    - `docs/cloudflare-notes`
    - `feat/contact-form`
-5. Make edits on that branch.
-6. Verify appropriate checks. For website/source changes, run:
+4. Make edits on that branch.
+5. Verify appropriate checks. For website/source changes, run:
 
 ```bash
 PATH=/Users/admin/.local/node-versions/node-v22.16.0-darwin-arm64/bin:$PATH npm run build
 ```
 
-7. Commit on the work branch.
-8. Switch back to `main`.
-9. Merge the work branch into `main` using a non-interactive merge.
-10. Confirm `git status --short --branch`.
-11. Report:
+6. Commit on the work branch.
+7. Switch back to `main`.
+8. Merge the work branch into `main` using a non-interactive merge.
+9. Confirm `git status --short --branch`.
+10. Report:
     - branch created
     - commit hash
     - merge result

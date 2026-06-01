@@ -16,6 +16,12 @@ const navItems = [
   { href: "/faq/", label: "FAQ" },
   { href: "/contact/", label: "聯絡" },
 ];
+
+const footerItems = [
+  { href: "/service/", label: "服務介紹" },
+  { href: "/faq/", label: "常見問題" },
+  { href: "/contact/", label: "聯絡預約" },
+];
 ---
 
 <!doctype html>
@@ -38,7 +44,7 @@ const navItems = [
         </a>
       </div>
       <nav class="site-nav" aria-label="主要導覽">
-        {navItems.map((item) => <a href={item.href}>{item.label}</a>)}
+        {navItems.map((item) => <a href={item.href} data-nav-link>{item.label}</a>)}
       </nav>
     </header>
 
@@ -54,13 +60,27 @@ const navItems = [
         </a>
         <p>透過安靜的對話，陪你整理狀態與找到下一步。</p>
         <div class="footer-links">
-          <a href="/service/">服務介紹</a>
-          <a href="/faq/">常見問題</a>
-          <a href="/contact/">聯絡預約</a>
+          {footerItems.map((item) => <a href={item.href} data-nav-link>{item.label}</a>)}
         </div>
         <p class="copyright">© 2026 靜初苑</p>
       </div>
     </footer>
+    <script>
+      const currentPath = window.location.pathname;
+
+      document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]").forEach((link) => {
+        const href = link.getAttribute("href");
+        const isActive = href === "/" ? currentPath === "/" : Boolean(href && currentPath.startsWith(href));
+
+        link.classList.toggle("is-active", isActive);
+
+        if (isActive) {
+          link.setAttribute("aria-current", "page");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    </script>
   </body>
 </html>
 
@@ -147,6 +167,7 @@ const navItems = [
   }
 
   .site-nav a {
+    position: relative;
     padding: 13px 30px;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
@@ -155,9 +176,20 @@ const navItems = [
     text-decoration: none;
   }
 
-  .site-nav a:hover {
+  .site-nav a:hover,
+  .site-nav a.is-active {
     color: var(--color-gold-dark);
     background: var(--color-soft);
+  }
+
+  .site-nav a.is-active::after {
+    position: absolute;
+    right: 22px;
+    bottom: -1px;
+    left: 22px;
+    height: 2px;
+    background: var(--color-gold);
+    content: "";
   }
 
   main {
@@ -424,7 +456,24 @@ const navItems = [
   }
 
   .footer-links a {
+    position: relative;
+    padding-bottom: 4px;
     text-decoration: none;
+  }
+
+  .footer-links a:hover,
+  .footer-links a.is-active {
+    color: var(--color-gold-dark);
+  }
+
+  .footer-links a.is-active::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: var(--color-gold);
+    content: "";
   }
 
   .site-footer p {
