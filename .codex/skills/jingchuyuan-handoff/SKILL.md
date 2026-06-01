@@ -21,29 +21,60 @@ Use this skill only if one of these is true:
 
 Do not use this skill for generic handoff requests in other repositories. Other projects may have their own handoff skills.
 
-## Required Branch Workflow
+## Git Workflow Boundaries
 
-Cloudflare Pages production should build from `main`. All project work, including handoff updates, must follow this branch flow unless the user explicitly says otherwise:
+Cloudflare Pages production should build from `main`. All file-changing work must pass the branch gate first. Normal development and handoff have different commit/merge behavior after that gate.
 
-1. Start from `main`.
-2. Check `git status --short --branch`, `git branch -a`, and `git branch -vv`.
-3. If `main` has unpushed commits, keep them; do not reset or discard them.
-4. Create a short descriptive branch from the current `main`, for example:
-   - `chore/update-handoff`
-   - `docs/cloudflare-notes`
-   - `feat/contact-form`
-5. Make edits on that branch.
-6. Verify appropriate checks. For website/source changes, run:
+### Mandatory Branch Gate
+
+Before reading implementation files deeply, running edits, applying patches, formatting, generating assets, or otherwise changing files, perform this gate:
+
+1. Run `git status --short --branch`, `git branch -a`, and `git branch -vv`.
+2. Confirm the current work is on a short descriptive branch created from `main`.
+3. If not on a correct work branch, do not edit files yet. Switch to `main`, create the correct branch, then continue.
+4. If there are already local edits on the wrong branch, stash only the relevant local edits, switch to `main`, create the correct work branch, then reapply the stash.
+5. If unrelated user changes are present, preserve them and do not stash, stage, commit, move, or overwrite them unless required for the current task.
+6. Report the branch being used before making the first edit.
+
+Never treat the branch gate as optional. If the gate has not been performed in the current turn, do not edit files.
+
+### Normal Development
+
+For normal development requests, such as changing links, copy, styles, images, or code:
+
+1. Pass the mandatory branch gate.
+2. Make the requested edits on the work branch.
+3. Run appropriate verification. For website/source changes, run:
 
 ```bash
 PATH=/Users/admin/.local/node-versions/node-v22.16.0-darwin-arm64/bin:$PATH npm run build
 ```
 
-7. Commit on the work branch.
-8. Switch back to `main`.
-9. Merge the work branch into `main` using a non-interactive merge.
-10. Confirm `git status --short --branch`.
-11. Report:
+4. Stop there unless the user explicitly asks to commit or merge.
+5. Do not commit, merge to `main`, or push for normal development requests unless the user explicitly asks in the same turn.
+
+### Explicit Handoff
+
+For explicit handoff requests, such as "交接", "交接工作", "更新交接", or "寫交接":
+
+1. Pass the mandatory branch gate.
+2. If `main` has unpushed commits, keep them; do not reset or discard them.
+3. Use a short descriptive branch name, for example:
+   - `chore/update-handoff`
+   - `docs/cloudflare-notes`
+   - `feat/contact-form`
+4. Update the handoff files on that branch.
+5. Verify appropriate checks. For website/source changes, run:
+
+```bash
+PATH=/Users/admin/.local/node-versions/node-v22.16.0-darwin-arm64/bin:$PATH npm run build
+```
+
+6. Commit on the work branch.
+7. Switch back to `main`.
+8. Merge the work branch into `main` using a non-interactive merge.
+9. Confirm `git status --short --branch`.
+10. Report:
     - branch created
     - commit hash
     - merge result
@@ -68,7 +99,7 @@ When the user asks for this project handoff:
    - file-level diff summary for any deployment-created branch, not just branch names
    - commands already verified
 4. Preserve useful previous context; do not erase open tasks unless completed.
-5. Follow the Required Branch Workflow above.
+5. Follow the handoff branch workflow above.
 6. Never overwrite unrelated user changes.
 7. Commit handoff updates by default unless the user explicitly asks not to commit.
 8. Report the commit hash, merge result, any remaining uncommitted files, and that push is left for the user.
