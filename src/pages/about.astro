@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PictureSlot from "../components/PictureSlot.astro";
+---
+
+<BaseLayout title="關於我">
+  <section class="page">
+    <div class="container split">
+      <div>
+        <p class="eyebrow">ABOUT</p>
+        <h1>關於我</h1>
+        <p class="lead">
+          這裡預留服務提供者的背景、理念、經歷與個人介紹。正式文案可以再依照品牌語氣調整。
+        </p>
+        <p>
+          目前版本先用簡潔的敘述架構，讓來訪者理解服務者是誰、為什麼開始提供這項服務，以及在服務中重視什麼。
+        </p>
+        <ul class="list">
+          <li>背景與經歷：專業訓練、相關經驗、服務年資。</li>
+          <li>服務理念：希望提供什麼樣的陪伴與支持。</li>
+          <li>適合對象：讓來訪者判斷是否與自己的需求相符。</li>
+        </ul>
+      </div>
+      <PictureSlot
+        src="/images/about/profile.webp"
+        alt="靜初苑服務提供者形象照"
+        label="大頭照或形象照預留"
+        variant="tall"
+      />
+    </div>
+  </section>
+</BaseLayout>
