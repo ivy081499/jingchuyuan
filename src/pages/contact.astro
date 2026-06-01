@@ -16,8 +16,18 @@ import PictureSlot from "../components/PictureSlot.astro";
           目前建議先以 LINE 官方帳號作為主要聯絡管道。表單區已先預留，後續可接 Cloudflare Worker 並發送 LINE 通知。
         </p>
         <div class="button-row">
-          <a class="button" href="#" aria-label="加入 LINE 官方帳號">加入 LINE</a>
-          <a class="button secondary" href="#" aria-label="前往 Instagram">Instagram</a>
+          <button class="button" type="button" data-line-dialog-open aria-label="加入 LINE 官方帳號">
+            加入 LINE
+          </button>
+          <a
+            class="button secondary"
+            href="https://www.instagram.com/jing_chu_yuan?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+            aria-label="前往 Instagram"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Instagram
+          </a>
         </div>
       </div>
       <PictureSlot
@@ -60,8 +70,19 @@ import PictureSlot from "../components/PictureSlot.astro";
           想聊的方向
           <textarea name="message" placeholder="可簡單說明目前需求，選填即可"></textarea>
         </label>
-        <button class="button" type="button">送出表單預留</button>
+        <button class="button" type="button" data-form-dialog-open>送出表單</button>
       </form>
     </div>
   </section>
+
 </BaseLayout>
+
+<script>
+  document.querySelector("[data-line-dialog-open]")?.addEventListener("click", () => {
+    alert("請先提供 LINE 官方帳號名稱、加入好友連結或 LINE ID，之後會把這個按鈕改成直接加入官方帳號。");
+  });
+
+  document.querySelector("[data-form-dialog-open]")?.addEventListener("click", () => {
+    alert("目前表單尚未啟用，還不會真的送出資料。正式啟用前需要先確認資料要通知到 LINE、Email 或 Google Sheet。");
+  });
+</script>
