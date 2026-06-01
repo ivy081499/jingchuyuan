@@ -21,9 +21,26 @@ Use this skill only if one of these is true:
 
 Do not use this skill for generic handoff requests in other repositories. Other projects may have their own handoff skills.
 
-## Required Branch Workflow
+## Git Workflow Boundaries
 
-Cloudflare Pages production should build from `main`. All project work, including handoff updates, must follow this branch flow unless the user explicitly says otherwise:
+Cloudflare Pages production should build from `main`, but normal development and handoff have different Git behavior.
+
+For normal development requests, such as changing links, copy, styles, images, or code:
+
+1. Start from `main`.
+2. Check `git status --short --branch`, `git branch -a`, and `git branch -vv`.
+3. Create a short descriptive branch from `main`.
+4. Make the requested edits on that branch.
+5. Run appropriate verification. For website/source changes, run:
+
+```bash
+PATH=/Users/admin/.local/node-versions/node-v22.16.0-darwin-arm64/bin:$PATH npm run build
+```
+
+6. Stop there unless the user explicitly asks to commit or merge.
+7. Do not commit, merge to `main`, or push for normal development requests unless the user explicitly asks in the same turn.
+
+For explicit handoff requests, such as "交接", "交接工作", "更新交接", or "寫交接":
 
 1. Start from `main`.
 2. Check `git status --short --branch`, `git branch -a`, and `git branch -vv`.
@@ -32,7 +49,7 @@ Cloudflare Pages production should build from `main`. All project work, includin
    - `chore/update-handoff`
    - `docs/cloudflare-notes`
    - `feat/contact-form`
-5. Make edits on that branch.
+5. Update handoff files on that branch.
 6. Verify appropriate checks. For website/source changes, run:
 
 ```bash
@@ -68,7 +85,7 @@ When the user asks for this project handoff:
    - file-level diff summary for any deployment-created branch, not just branch names
    - commands already verified
 4. Preserve useful previous context; do not erase open tasks unless completed.
-5. Follow the Required Branch Workflow above.
+5. Follow the handoff branch workflow above.
 6. Never overwrite unrelated user changes.
 7. Commit handoff updates by default unless the user explicitly asks not to commit.
 8. Report the commit hash, merge result, any remaining uncommitted files, and that push is left for the user.

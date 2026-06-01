@@ -1,6 +1,6 @@
 # Jing Chu Yuan Project Handoff
 
-Last updated: 2026-06-01 20:36 CST
+Last updated: 2026-06-01 21:08 CST
 
 ## Project Overview
 
@@ -80,7 +80,7 @@ If files are missing, `PictureSlot.astro` displays a placeholder with the expect
 
 - [ ] Replace draft copy with client-provided official copy.
 - [ ] Add final images.
-- [ ] Replace placeholder LINE and Instagram links.
+- [ ] Replace placeholder LINE link with real LINE Official Account URL once provided.
 - [ ] Make contact form submit data.
 - [ ] Store submitted form data.
 - [ ] Send form notification to LINE Official Account.
@@ -138,20 +138,44 @@ git status --short
 
 ## Recent Commits
 
+- `1be68e1 Initial commit`
 - `a942336 Initialize Astro project`
 - `fe26cd6 Build initial website draft`
-- `1be68e1 Initial commit`
+- `cf573f9 Add project handoff workflow`
+- `9a4f85f Document Cloudflare branch state in handoff`
+- `863f82c Document Worker autoconfig changes`
+- `59c6653 Merge handoff branch workflow`
+- `b2fd665 Merge no-push rule`
 
 ## Current Git State
 
-As of 2026-06-01 20:36 CST, current branch state:
+As of 2026-06-01 21:08 CST, current branch state:
 
-- Local branch: `main`
+- Current branch: `chore/contact-alerts-and-workflow-rules`
+- Local branch: `main` at `b2fd665`
 - Remote branches:
   - `origin/main`
   - `origin/cloudflare/workers-autoconfig`
-- `main` has local commit `cf573f9 Add project handoff workflow` and is ahead of `origin/main` by 1 commit.
+- `main` and `origin/main` both point at `b2fd665 Merge no-push rule`.
 - `origin/cloudflare/workers-autoconfig` has commit `d4be162 Add Cloudflare Workers configuration`, diverging from `fe26cd6 Build initial website draft`.
+- Current branch has uncommitted changes in:
+  - `.codex/skills/jingchuyuan-handoff/SKILL.md`
+  - `PROJECT_HANDOFF.md`
+  - `src/pages/contact.astro`
+
+Current uncommitted contact page changes:
+
+- Instagram button now links to `https://www.instagram.com/jing_chu_yuan?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==`.
+- "加入 LINE" is now a button that shows a simple `alert()` asking for LINE Official Account name, add-friend URL, LINE ID, or QR Code.
+- Form button text changed from `送出表單預留` to `送出表單`.
+- Form button now shows a simple `alert()` saying the form is not active yet and needs a notification target such as LINE, Email, or Google Sheet.
+- Build verified after these changes with `npm run build`.
+
+Important workflow correction:
+
+- Normal development work should not be committed or merged unless the user explicitly asks.
+- Handoff work may update and commit handoff files, but must not accidentally commit unrelated normal-development changes.
+- Never run `git push`; user handles push manually.
 
 Important: `origin/cloudflare/workers-autoconfig` was created by Cloudflare during the wrong Worker-style setup. Do not merge it into `main` for the current static Pages site. It likely contains Worker/Wrangler configuration that caused or relates to the failed deployment path.
 
@@ -171,12 +195,12 @@ Decision: none of these Worker/autoconfig changes should be brought into `main` 
 
 ## Next Recommended Steps
 
-1. For all future work, start from `main`, create a descriptive branch, commit there, verify, then merge back into `main`.
-2. Do not push. The user handles all `git push` operations.
-3. Do not use or merge `origin/cloudflare/workers-autoconfig`.
-4. Add the prepared images to `public/images/...` using the exact filenames in `IMAGE_PLAN.md`.
-5. Run `npm run build`.
-6. Commit image/content changes on a branch, then merge into `main`.
+1. For normal development requests, start from `main`, create a descriptive branch, make edits, verify, then stop. Do not commit or merge unless the user explicitly asks.
+2. For explicit handoff requests, update handoff files on a branch, commit, then merge back into `main`.
+3. Do not push. The user handles all `git push` operations.
+4. Do not use or merge `origin/cloudflare/workers-autoconfig`.
+5. Add the prepared images to `public/images/...` using the exact filenames in `IMAGE_PLAN.md`.
+6. Run `npm run build`.
 7. Tell the user when `main` is ahead and let the user push to GitHub.
 8. Deploy through Cloudflare Pages, not Workers.
 9. After client review, update official copy and links.
@@ -194,6 +218,6 @@ Only use this handoff file for the `jingchuyuan` / `靜初苑` website project. 
 
 When the user says "交接", "交接工作", "更新交接", "寫交接", or similar while working inside this repo or while explicitly referring to this project, update this file with the latest work state and unfinished tasks.
 
-Branch workflow rule: future updates should be done on a branch created from `main`, then merged back into `main` after verification. Cloudflare Pages production should use `main`.
+Branch workflow rule: normal development should be done on a branch created from `main`, but should not be committed or merged unless the user asks. Explicit handoff updates should be committed on a branch and merged back into `main` after verification. Cloudflare Pages production should use `main`.
 
 Push rule: never run `git push` for this project unless the user gives a new explicit push instruction in the same turn. The user wants to handle pushing manually.
