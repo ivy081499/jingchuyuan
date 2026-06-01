@@ -1,6 +1,6 @@
 # Jing Chu Yuan Project Handoff
 
-Last updated: 2026-06-01 20:36 CST
+Last updated: 2026-06-01 21:08 CST
 
 ## Project Overview
 
@@ -80,7 +80,7 @@ If files are missing, `PictureSlot.astro` displays a placeholder with the expect
 
 - [ ] Replace draft copy with client-provided official copy.
 - [ ] Add final images.
-- [ ] Replace placeholder LINE and Instagram links.
+- [ ] Replace placeholder LINE link with real LINE Official Account URL once provided.
 - [ ] Make contact form submit data.
 - [ ] Store submitted form data.
 - [ ] Send form notification to LINE Official Account.
@@ -138,20 +138,54 @@ git status --short
 
 ## Recent Commits
 
+- `47e64c9 修正NAV BAR樣式`
+- `2b90de1 Update contact action placeholders`
+- `bd64f8d Update handoff with current contact work`
+- `1be68e1 Initial commit`
 - `a942336 Initialize Astro project`
 - `fe26cd6 Build initial website draft`
-- `1be68e1 Initial commit`
+- `cf573f9 Add project handoff workflow`
+- `9a4f85f Document Cloudflare branch state in handoff`
+- `863f82c Document Worker autoconfig changes`
+- `59c6653 Merge handoff branch workflow`
+- `b2fd665 Merge no-push rule`
 
 ## Current Git State
 
-As of 2026-06-01 20:36 CST, current branch state:
+As of 2026-06-01 21:50 CST, current branch state:
 
-- Local branch: `main`
+- Current branch: `feature/nav-active-state`
+- Local branch: `main` at `b2fd665`
+- `feature/nav-active-state` has commit `47e64c9 修正NAV BAR樣式`.
+- `chore/contact-alerts-and-workflow-rules` has commits:
+  - `bd64f8d Update handoff with current contact work`
+  - `2b90de1 Update contact action placeholders`
 - Remote branches:
   - `origin/main`
   - `origin/cloudflare/workers-autoconfig`
-- `main` has local commit `cf573f9 Add project handoff workflow` and is ahead of `origin/main` by 1 commit.
+- `main` and `origin/main` both point at `b2fd665 Merge no-push rule`.
 - `origin/cloudflare/workers-autoconfig` has commit `d4be162 Add Cloudflare Workers configuration`, diverging from `fe26cd6 Build initial website draft`.
+- Current merge work is resolving `chore/contact-alerts-and-workflow-rules` into `feature/nav-active-state`.
+- Merge conflicts were in:
+  - `.codex/skills/jingchuyuan-handoff/SKILL.md`
+  - `PROJECT_HANDOFF.md`
+- Non-conflicting merge change:
+  - `src/pages/contact.astro`
+
+Merged contact page changes from `chore/contact-alerts-and-workflow-rules`:
+
+- Instagram button now links to `https://www.instagram.com/jing_chu_yuan?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==`.
+- "加入 LINE" is now a button that shows a simple `alert()` asking for LINE Official Account name, add-friend URL, LINE ID, or QR Code.
+- Form button text changed from `送出表單預留` to `送出表單`.
+- Form button now shows a simple `alert()` saying the form is not active yet and needs a notification target such as LINE, Email, or Google Sheet.
+- Build verified after these changes with `npm run build`.
+
+Important workflow correction:
+
+- All file-changing work must pass the branch gate before edits: check branch/status, start from `main`, create a descriptive work branch, and report the branch before editing.
+- Normal development work should be edited and verified on the work branch, then stopped unless the user explicitly asks to commit or merge.
+- Handoff work may update and commit handoff files, then merge back into `main`, but must not accidentally commit unrelated normal-development changes.
+- Never run `git push`; user handles push manually.
 
 Important: `origin/cloudflare/workers-autoconfig` was created by Cloudflare during the wrong Worker-style setup. Do not merge it into `main` for the current static Pages site. It likely contains Worker/Wrangler configuration that caused or relates to the failed deployment path.
 
@@ -175,15 +209,17 @@ Decision: none of these Worker/autoconfig changes should be brought into `main` 
 2. If the current branch is not a short descriptive branch created from `main`, stop before editing, switch to `main`, create the branch, then continue.
 3. If edits were accidentally made on the wrong branch, stash only the relevant edits, move to a correct branch from `main`, then reapply them. Do not continue editing on the wrong branch.
 4. Report the branch being used before the first edit.
-5. Do not push. The user handles all `git push` operations.
-6. Do not use or merge `origin/cloudflare/workers-autoconfig`.
-7. Add the prepared images to `public/images/...` using the exact filenames in `IMAGE_PLAN.md`.
-8. Run `npm run build`.
-9. Commit image/content changes on a branch, then merge into `main` if the user wants the work finalized.
-10. Tell the user when `main` is ahead and let the user push to GitHub.
-11. Deploy through Cloudflare Pages, not Workers.
-12. After client review, update official copy and links.
-13. Decide whether first release needs real form submission or only LINE/IG contact buttons.
+5. For normal development requests, make edits, verify, then stop. Do not commit or merge unless the user explicitly asks.
+6. For explicit handoff requests, update handoff files on a branch, commit, then merge back into `main`.
+7. Do not push. The user handles all `git push` operations.
+8. Do not use or merge `origin/cloudflare/workers-autoconfig`.
+9. Add the prepared images to `public/images/...` using the exact filenames in `IMAGE_PLAN.md`.
+10. Run `npm run build`.
+11. Commit image/content changes on a branch, then merge into `main` only if the user wants the work finalized.
+12. Tell the user when `main` is ahead and let the user push to GitHub.
+13. Deploy through Cloudflare Pages, not Workers.
+14. After client review, update official copy and links.
+15. Decide whether first release needs real form submission or only LINE/IG contact buttons.
 
 ## Handoff Skill
 
@@ -197,7 +233,7 @@ Only use this handoff file for the `jingchuyuan` / `靜初苑` website project. 
 
 When the user says "交接", "交接工作", "更新交接", "寫交接", or similar while working inside this repo or while explicitly referring to this project, update this file with the latest work state and unfinished tasks.
 
-Branch workflow rule: future updates must pass the branch gate before any edit. Check branch/status first, start from `main`, create a descriptive work branch, make edits there, verify, and only merge back into `main` when the user wants the work finalized. Cloudflare Pages production should use `main`.
+Branch workflow rule: future updates must pass the branch gate before any edit. Check branch/status first, start from `main`, create a descriptive work branch, make edits there, and verify. Normal development should not be committed or merged unless the user asks. Explicit handoff updates should be committed on a branch and merged back into `main` after verification. Cloudflare Pages production should use `main`.
 
 Push rule: never run `git push` for this project unless the user gives a new explicit push instruction in the same turn. The user wants to handle pushing manually.
 
