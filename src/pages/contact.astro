@@ -13,7 +13,7 @@ import PictureSlot from "../components/PictureSlot.astro";
         <p class="eyebrow">CONTACT</p>
         <h1>聯絡與預約</h1>
         <p class="lead">
-          目前建議先以 LINE 官方帳號作為主要聯絡管道。表單區已先預留，後續可接 Cloudflare Worker 並發送 LINE 通知。
+          目前建議先以 LINE 官方帳號作為主要聯絡管道，也可以透過 Instagram 詢問服務與預約方式。
         </p>
         <div class="button-row">
           <button class="button" type="button" data-line-dialog-open aria-label="加入 LINE 官方帳號">
@@ -38,6 +38,9 @@ import PictureSlot from "../components/PictureSlot.astro";
     </div>
   </section>
 
+  <!--
+  表單功能暫時隱藏。
+  後續若要啟用，可接 Cloudflare Function / Worker，並將資料存到 Google Sheet、D1 或通知管理者。
   <section class="band">
     <div class="container split">
       <div>
@@ -74,15 +77,17 @@ import PictureSlot from "../components/PictureSlot.astro";
       </form>
     </div>
   </section>
+  -->
 
 </BaseLayout>
 
 <script>
   document.querySelector("[data-line-dialog-open]")?.addEventListener("click", () => {
-    alert("請先提供 LINE 官方帳號名稱、加入好友連結或 LINE ID，之後會把這個按鈕改成直接加入官方帳號。");
+    alert("TODO");
   });
 
-  document.querySelector("[data-form-dialog-open]")?.addEventListener("click", () => {
-    alert("目前表單尚未啟用，還不會真的送出資料。正式啟用前需要先確認資料要通知到 LINE、Email 或 Google Sheet。");
-  });
+  // 表單功能暫時隱藏；待正式確認資料收集方式後再啟用。
+  // document.querySelector("[data-form-dialog-open]")?.addEventListener("click", () => {
+  //   alert("目前表單尚未啟用，還不會真的送出資料。正式啟用前需要先確認資料要通知到 LINE、Email 或 Google Sheet。");
+  // });
 </script>
