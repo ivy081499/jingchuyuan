@@ -24,7 +24,7 @@ Do not use this skill for generic handoff requests in other repositories. Other 
 When the user asks for this project handoff:
 
 1. Work in the repo root.
-2. Read `PROJECT_HANDOFF.md`, `git status --short`, recent commits, and any changed files relevant to current work.
+2. Read `PROJECT_HANDOFF.md`, `git status --short --branch`, `git branch -a`, `git branch -vv`, recent commits, and any changed files relevant to current work.
 3. Update `PROJECT_HANDOFF.md` with:
    - exact date/time if useful
    - what changed today
@@ -33,11 +33,13 @@ When the user asks for this project handoff:
    - unfinished work
    - next recommended steps
    - risks/blockers
+   - local and remote branch state, especially extra deployment-created branches
    - commands already verified
 4. Preserve useful previous context; do not erase open tasks unless completed.
 5. Decide whether a branch is needed:
    - For documentation-only handoff updates on a clean or already-active working branch, update and commit directly.
    - For risky code changes, unrelated dirty worktree changes, or experimental handoff-related fixes, create a descriptive branch before editing.
+   - Do not create a new branch for handoff documentation unless there is a clear isolation reason.
    - Never overwrite unrelated user changes.
 6. Commit handoff updates by default unless the user explicitly asks not to commit.
 7. Report the commit hash and any remaining uncommitted files.

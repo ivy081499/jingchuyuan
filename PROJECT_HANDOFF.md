@@ -144,24 +144,31 @@ git status --short
 
 ## Current Git State
 
-As of 2026-06-01 20:36 CST, uncommitted files:
+As of 2026-06-01 20:36 CST, current branch state:
 
-- `.codex/skills/jingchuyuan-handoff/SKILL.md`
-- `CLOUDFLARE_DEPLOY.md`
-- `PROJECT_HANDOFF.md`
+- Local branch: `main`
+- Remote branches:
+  - `origin/main`
+  - `origin/cloudflare/workers-autoconfig`
+- `main` has local commit `cf573f9 Add project handoff workflow` and is ahead of `origin/main` by 1 commit.
+- `origin/cloudflare/workers-autoconfig` has commit `d4be162 Add Cloudflare Workers configuration`, diverging from `fe26cd6 Build initial website draft`.
 
-These are documentation/skill files only. Site source files are otherwise clean at the last commit.
+Important: `origin/cloudflare/workers-autoconfig` was created by Cloudflare during the wrong Worker-style setup. Do not merge it into `main` for the current static Pages site. It likely contains Worker/Wrangler configuration that caused or relates to the failed deployment path.
+
+Do not delete the remote branch without explicit user approval. Recommended handling is to ignore it for now and deploy from `main` using Cloudflare Pages static settings.
 
 ## Next Recommended Steps
 
 1. Commit current documentation/skill updates if desired.
-2. Add the prepared images to `public/images/...` using the exact filenames in `IMAGE_PLAN.md`.
-3. Run `npm run build`.
-4. Commit image/content changes.
-5. Push to GitHub.
-6. Deploy through Cloudflare Pages, not Workers.
-7. After client review, update official copy and links.
-8. Decide whether first release needs real form submission or only LINE/IG contact buttons.
+2. Push `main` if the handoff commit should be available on GitHub.
+3. Do not use or merge `origin/cloudflare/workers-autoconfig`.
+4. Add the prepared images to `public/images/...` using the exact filenames in `IMAGE_PLAN.md`.
+5. Run `npm run build`.
+6. Commit image/content changes.
+7. Push to GitHub.
+8. Deploy through Cloudflare Pages, not Workers.
+9. After client review, update official copy and links.
+10. Decide whether first release needs real form submission or only LINE/IG contact buttons.
 
 ## Handoff Skill
 
