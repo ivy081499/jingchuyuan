@@ -1,6 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PictureSlot from "../components/PictureSlot.astro";
+
+const lineAppUrl = "line://ti/p/~eoo4230y";
+const lineWebUrl = "https://line.me/R/ti/p/~eoo4230y";
 ---
 
 <BaseLayout
@@ -16,9 +19,17 @@ import PictureSlot from "../components/PictureSlot.astro";
           目前建議先以 LINE 官方帳號作為主要聯絡管道，也可以透過 Instagram 詢問服務與預約方式。
         </p>
         <div class="button-row">
-          <button class="button" type="button" data-line-dialog-open aria-label="加入 LINE 官方帳號">
+          <a
+            class="button"
+            href={lineWebUrl}
+            aria-label="加入 LINE 官方帳號"
+            target="_blank"
+            rel="noreferrer"
+            data-line-app-url={lineAppUrl}
+            data-line-web-url={lineWebUrl}
+          >
             加入 LINE
-          </button>
+          </a>
           <a
             class="button secondary"
             href="https://www.instagram.com/jing_chu_yuan?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
@@ -82,12 +93,30 @@ import PictureSlot from "../components/PictureSlot.astro";
 </BaseLayout>
 
 <script>
-  document.querySelector("[data-line-dialog-open]")?.addEventListener("click", () => {
-    alert("TODO");
-  });
+  const isMobileDevice = () =>
+    window.matchMedia("(pointer: coarse)").matches ||
+    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
 
-  // 表單功能暫時隱藏；待正式確認資料收集方式後再啟用。
-  // document.querySelector("[data-form-dialog-open]")?.addEventListener("click", () => {
-  //   alert("目前表單尚未啟用，還不會真的送出資料。正式啟用前需要先確認資料要通知到 LINE、Email 或 Google Sheet。");
-  // });
+  document.querySelectorAll<HTMLAnchorElement>("[data-line-app-url][data-line-web-url]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const appUrl = link.dataset.lineAppUrl;
+      const webUrl = link.dataset.lineWebUrl;
+
+      if (!appUrl || !webUrl) {
+        return;
+      }
+
+      if (!isMobileDevice()) {
+        return;
+      }
+
+      event.preventDefault();
+      window.location.href = appUrl;
+      window.setTimeout(() => {
+        if (!document.hidden) {
+          window.location.href = webUrl;
+        }
+      }, 900);
+    });
+  });
 </script>
