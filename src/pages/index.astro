@@ -142,13 +142,18 @@ import PictureSlot from "../components/PictureSlot.astro";
   }
 
   .hero-panel {
-    width: min(calc(100% - 40px), 560px);
+    width: min(calc(100% - 48px), 880px);
     margin: -150px auto 0;
-    padding: clamp(28px, 5vw, 48px);
+    padding: clamp(28px, 5vw, 56px);
     position: relative;
     z-index: 1;
     background: rgba(255, 255, 255, 0.88);
     text-align: center;
+  }
+
+  .hero-panel h1 {
+    max-width: 820px;
+    font-size: clamp(34px, 5vw, 58px);
   }
 
   .hero-panel h1,
@@ -188,8 +193,14 @@ import PictureSlot from "../components/PictureSlot.astro";
 
   @media (max-width: 640px) {
     .hero-panel {
+      width: min(calc(100% - 32px), 560px);
       margin-top: -110px;
+      padding: 28px 22px;
       text-align: left;
+    }
+
+    .hero-panel h1 {
+      font-size: clamp(30px, 8vw, 42px);
     }
   }
 </style>
